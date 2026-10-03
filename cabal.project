@@ -1,0 +1,16 @@
+packages: .
+          module
+
+-- hs-jev and hs-spacetime are pinned here. To work against sibling checkouts,
+-- use cabal.project.dev instead:  cabal --project-file=cabal.project.dev build all
+source-repository-package
+  type: git
+  location: https://github.com/getmissionctrl/hs-jev
+  tag: 89ac345f738c823b8d5b59d0dfc5bcce3df08717
+
+source-repository-package
+  type: git
+  location: https://github.com/getmissionctrl/hs-spacetime
+  tag: 3301606b31b57810c839c75efd3c5928d1e638d1
+
+tests: True

@@ -1,0 +1,84 @@
+cabal-version:      3.0
+name:               spacetime-jev
+version:            0.1.0.0
+synopsis:           Natural-language judgments over SpacetimeDB tables, kept current by a sidecar
+description:
+  The pg-jev idea moved onto SpacetimeDB: a sidecar subscribes to a table,
+  batches rows through a Jev-compatible decision API (TypeSafe Jev, or a local
+  Intern-Decision server), and writes calibrated answers back as rows that any
+  client can subscribe to.
+license:            MIT
+build-type:         Simple
+
+common extensions
+  default-language:   GHC2021
+  default-extensions: DataKinds
+                      DuplicateRecordFields
+                      LambdaCase
+                      OverloadedRecordDot
+                      OverloadedStrings
+                      RecordWildCards
+  ghc-options:        -Wall
+
+library
+  import:           extensions
+  hs-source-dirs:   src
+  exposed-modules:  SpacetimeJev.Dynamic
+                    SpacetimeJev.Batch
+                    SpacetimeJev.Judge
+                    SpacetimeJev.Sink
+  build-depends:    base >=4.14 && <5
+                  , aeson >=2.0
+                  , base16-bytestring
+                  , bytestring
+                  , containers
+                  , cryptohash-sha256
+                  , scientific
+                  , vector
+                  , stm
+                  , text
+                  , hs-jev
+                  , hs-spacetime
+                  , hs-spacetime:bsatn
+                  , hs-spacetime:spacetime-server
+                  , jev-module
+
+executable jev-judge
+  import:           extensions
+  hs-source-dirs:   app
+  main-is:          Main.hs
+  build-depends:    base
+                  , aeson
+                  , bytestring
+                  , containers
+                  , optparse-applicative
+                  , stm
+                  , text
+                  , hs-jev
+                  , hs-spacetime
+                  , jev-module
+                  , spacetime-jev
+  ghc-options:      -threaded -rtsopts
+
+test-suite spec
+  import:           extensions
+  type:             exitcode-stdio-1.0
+  hs-source-dirs:   test
+  main-is:          Spec.hs
+  other-modules:    MockJev
+  build-depends:    base
+                  , aeson
+                  , bytestring
+                  , containers
+                  , hspec
+                  , http-types
+                  , text
+                  , vector
+                  , wai
+                  , warp
+                  , wide-word
+                  , hs-jev
+                  , hs-spacetime
+                  , hs-spacetime:bsatn
+                  , spacetime-jev
+  ghc-options:      -threaded

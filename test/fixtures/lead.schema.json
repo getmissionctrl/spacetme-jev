@@ -1,0 +1,309 @@
+{
+ "sections": [
+  {
+   "Typespace": {
+    "types": [
+     {
+      "Product": {
+       "elements": [
+        {
+         "name": {
+          "some": "id"
+         },
+         "algebraic_type": {
+          "U64": []
+         }
+        },
+        {
+         "name": {
+          "some": "name"
+         },
+         "algebraic_type": {
+          "String": []
+         }
+        },
+        {
+         "name": {
+          "some": "research"
+         },
+         "algebraic_type": {
+          "Sum": {
+           "variants": [
+            {
+             "name": {
+              "some": "some"
+             },
+             "algebraic_type": {
+              "String": []
+             }
+            },
+            {
+             "name": {
+              "some": "none"
+             },
+             "algebraic_type": {
+              "Product": {
+               "elements": []
+              }
+             }
+            }
+           ]
+          }
+         }
+        },
+        {
+         "name": {
+          "some": "owner"
+         },
+         "algebraic_type": {
+          "Product": {
+           "elements": [
+            {
+             "name": {
+              "some": "__identity__"
+             },
+             "algebraic_type": {
+              "U256": []
+             }
+            }
+           ]
+          }
+         }
+        },
+        {
+         "name": {
+          "some": "at"
+         },
+         "algebraic_type": {
+          "Product": {
+           "elements": [
+            {
+             "name": {
+              "some": "__timestamp_micros_since_unix_epoch__"
+             },
+             "algebraic_type": {
+              "I64": []
+             }
+            }
+           ]
+          }
+         }
+        },
+        {
+         "name": {
+          "some": "stage"
+         },
+         "algebraic_type": {
+          "Ref": 1
+         }
+        },
+        {
+         "name": {
+          "some": "tags"
+         },
+         "algebraic_type": {
+          "Array": {
+           "elem_ty": {
+            "String": []
+           }
+          }
+         }
+        },
+        {
+         "name": {
+          "some": "score"
+         },
+         "algebraic_type": {
+          "F64": []
+         }
+        }
+       ]
+      }
+     },
+     {
+      "Sum": {
+       "variants": [
+        {
+         "name": {
+          "some": "New"
+         },
+         "algebraic_type": {
+          "Product": {
+           "elements": []
+          }
+         }
+        },
+        {
+         "name": {
+          "some": "Won"
+         },
+         "algebraic_type": {
+          "Product": {
+           "elements": []
+          }
+         }
+        },
+        {
+         "name": {
+          "some": "Note"
+         },
+         "algebraic_type": {
+          "String": []
+         }
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "Types": [
+    {
+     "source_name": {
+      "scope": [],
+      "source_name": "Lead"
+     },
+     "ty": 0,
+     "custom_ordering": true
+    },
+    {
+     "source_name": {
+      "scope": [],
+      "source_name": "Stage"
+     },
+     "ty": 1,
+     "custom_ordering": true
+    }
+   ]
+  },
+  {
+   "Tables": [
+    {
+     "source_name": "lead",
+     "product_type_ref": 0,
+     "primary_key": [
+      0
+     ],
+     "indexes": [],
+     "constraints": [],
+     "sequences": [
+      {
+       "source_name": {
+        "some": "widget_id_seq"
+       },
+       "column": 0,
+       "start": {
+        "none": []
+       },
+       "min_value": {
+        "none": []
+       },
+       "max_value": {
+        "none": []
+       },
+       "increment": 1
+      }
+     ],
+     "table_type": {
+      "User": []
+     },
+     "table_access": {
+      "Public": []
+     },
+     "default_values": [],
+     "is_event": false
+    }
+   ]
+  },
+  {
+   "Reducers": [
+    {
+     "source_name": "add_widget",
+     "params": {
+      "elements": [
+       {
+        "name": {
+         "some": "name"
+        },
+        "algebraic_type": {
+         "String": []
+        }
+       },
+       {
+        "name": {
+         "some": "quantity"
+        },
+        "algebraic_type": {
+         "U32": []
+        }
+       }
+      ]
+     },
+     "visibility": {
+      "ClientCallable": []
+     },
+     "ok_return_type": {
+      "Product": {
+       "elements": []
+      }
+     },
+     "err_return_type": {
+      "String": []
+     }
+    },
+    {
+     "source_name": "init",
+     "params": {
+      "elements": []
+     },
+     "visibility": {
+      "Private": []
+     },
+     "ok_return_type": {
+      "Product": {
+       "elements": []
+      }
+     },
+     "err_return_type": {
+      "String": []
+     }
+    }
+   ]
+  },
+  {
+   "LifeCycleReducers": [
+    {
+     "lifecycle_spec": {
+      "Init": []
+     },
+     "function_name": "init"
+    }
+   ]
+  },
+  {
+   "ExplicitNames": {
+    "entries": [
+     {
+      "Table": {
+       "source_name": "widget",
+       "canonical_name": "widget"
+      }
+     },
+     {
+      "Function": {
+       "source_name": "add_widget",
+       "canonical_name": "add_widget"
+      }
+     },
+     {
+      "Function": {
+       "source_name": "init",
+       "canonical_name": "init"
+      }
+     }
+    ]
+   }
+  }
+ ]
+}

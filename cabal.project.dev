@@ -1,0 +1,6 @@
+packages: .
+          module
+          ../hs-jev
+          ../hs-spacetime
+
+tests: True

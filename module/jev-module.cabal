@@ -1,0 +1,72 @@
+cabal-version:      3.0
+name:               jev-module
+version:            0.1.0.0
+synopsis:           SpacetimeDB module holding conditions and Jev judgments (Haskell, wasm)
+license:            MIT
+build-type:         Simple
+
+flag wasm
+  description: Build the wasm reactor for this module.
+  default:     False
+  manual:      True
+
+common extensions
+  default-language:   GHC2021
+  default-extensions: DataKinds
+                      DeriveAnyClass
+                      DeriveGeneric
+                      DerivingStrategies
+                      DuplicateRecordFields
+                      FlexibleInstances
+                      OverloadedRecordDot
+                      OverloadedStrings
+                      StandaloneDeriving
+                      TypeFamilies
+                      TypeApplications
+                      NoFieldSelectors
+
+-- Shared by the wasm module and the native judge: one set of tables and
+-- reducer handles drives both ends.
+library
+  import:           extensions
+  hs-source-dirs:   src
+  exposed-modules:  JevSchema
+  build-depends:    base
+                  , text
+                  , hs-spacetime:spacetime-server
+                  , hs-spacetime:bsatn
+  ghc-options:      -Wall
+
+test-suite jev-module-test
+  import:           extensions
+  type:             exitcode-stdio-1.0
+  hs-source-dirs:   test
+  main-is:          Spec.hs
+  other-modules:    FakeBackend
+  build-depends:    base
+                  , bytestring
+                  , containers
+                  , text
+                  , hs-spacetime:spacetime-server
+                  , hs-spacetime:bsatn
+                  , jev-module
+                  , hspec
+  ghc-options:      -Wall
+
+-- WASI-free wasm reactor; build with hs-spacetime's .#wasm shell and its
+-- build-wasm.sh pipeline (wasm32-wasi-cabal -> wizer -> WASI stubs).
+executable jev-module
+  import:           extensions
+  hs-source-dirs:   app
+  main-is:          JevModule.hs
+  if !flag(wasm)
+    buildable: False
+  if flag(wasm)
+    build-depends:  base
+                  , hs-spacetime:spacetime-server
+                  , jev-module
+    ghc-options:    -no-hs-main -optl-mexec-model=reactor
+                    -optl-Wl,--export=__describe_module__
+                    -optl-Wl,--export=__call_reducer__
+                    -optl-Wl,--export=_initialize
+                    -optl-Wl,--export-memory

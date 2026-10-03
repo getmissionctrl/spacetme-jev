@@ -1,0 +1,4 @@
+-- Only the module and the server half of hs-spacetime cross-compile to wasm.
+-- Used by module/scripts/build-wasm.sh inside hs-spacetime's `.#wasm` shell.
+packages: module
+          ../hs-spacetime
